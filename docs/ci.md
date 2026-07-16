@@ -46,18 +46,22 @@ Whichever adapter you pick, its CLI must be installed and authenticated in the C
 | Adapter | CLI binary | Auth in CI |
 | --- | --- | --- |
 | `claude` | `claude` | `ANTHROPIC_API_KEY` |
-| `copilot` | `copilot` | `GH_TOKEN` / Copilot subscription auth |
+| `copilot` | `copilot` | built-in `GITHUB_TOKEN` (via the `GH_TOKEN` env var) + `copilot-requests: write` |
 | `cursor` | `cursor-agent` | `CURSOR_API_KEY` |
 
 The Action can run behavioral evals directly via the `behavioral` input:
 
 ```yaml
-- uses: ahnafyy/skills-evals@v0.1.0
-  with:
-    behavioral: test-driven-development, commit-messages
-    adapter: copilot   # optional — omit to use config / default
-  env:
-    GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+permissions:
+  contents: read
+  copilot-requests: write   # lets Copilot CLI auth with the built-in GITHUB_TOKEN
+steps:
+  - uses: ahnafyy/skills-evals@v0.2.0
+    with:
+      behavioral: test-driven-development, commit-messages
+      adapter: copilot   # optional — omit to use config / default
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## With npx instead
