@@ -8,7 +8,7 @@
  *   skills-evals run                        Tiers 1+2 (+ baseline diff)
  *   skills-evals run --update-baseline      snapshot current results
  *   skills-evals init                       scaffold eval case stubs
- *   skills-evals behavioral <name>          Tier 3 — spends tokens
+ *   skills-evals behavioral <name>          Tier 3 — real agent, run scheduled
  *
  * Global flags: --root <dir>  --json
  */
@@ -237,7 +237,7 @@ Usage:
   skills-evals run                      Tiers 1+2 + baseline regression diff (CI-safe, free)
   skills-evals run --update-baseline    Snapshot results to .skills-evals/baseline.json
   skills-evals init                     Scaffold eval case stubs for uncovered artifacts
-  skills-evals behavioral <name>        Tier 3: run + grade behavioral evals (spends tokens)
+  skills-evals behavioral <name>        Tier 3: a real agent proves the skill still works (run it scheduled)
     --adapter claude|copilot|cursor       Executor (default: claude)
     --grader <adapter>                    Grader (default: same as executor)
     --dry-run                             Print the plan without executing

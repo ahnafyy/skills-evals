@@ -2,10 +2,12 @@
 
 Tier 3 answers the question the other tiers can't: **does an agent following this artifact actually behave the way it promises?** It runs each eval prompt through a real headless agent and grades the execution trace against your `expectations[]`.
 
-Opt-in only. It spends tokens and is never part of `run`.
+**This is where the real value is.** Tiers 1 and 2 prove a skill is well-formed and routable; only Tier 3 proves it still *works* after your codebase or the underlying model changes. Run it on a schedule (nightly or weekly) so that drift surfaces on its own — see [CI](ci.md) for the scheduled workflow this repo uses. It's kept out of `run` so PR CI stays instant and free, not because it's something to avoid.
+
+Keep it cheap so you keep it running: point the executor and grader at a small, fast model. Most expectations are about *which actions the agent took* ("a failing test was run before the fix"), and cheap models judge that reliably — you rarely need a frontier model here.
 
 ```bash
-skills-evals behavioral test-driven-development --dry-run   # print the plan, spend nothing
+skills-evals behavioral test-driven-development --dry-run   # print the plan, no model call
 skills-evals behavioral test-driven-development             # execute + grade
 skills-evals behavioral my-skill --adapter copilot --grader claude
 ```

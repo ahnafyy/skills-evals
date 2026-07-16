@@ -15,7 +15,7 @@ npx skills-evals list                    # see what it found in your repo
 npx skills-evals init                    # scaffold eval case stubs
 npx skills-evals run                     # tiers 1+2 (free, deterministic, CI-safe)
 npx skills-evals run --update-baseline   # snapshot for regression detection — commit it
-npx skills-evals behavioral my-skill     # tier 3 (runs a real agent, spends tokens)
+npx skills-evals behavioral my-skill     # tier 3 — a real agent proves the skill still works
 ```
 
 ### Or let an agent set it up for you
@@ -45,7 +45,9 @@ Then ask your agent: *"set up skills-evals in this repo"*.
 | --- | --- | --- | --- |
 | 1. Structural | Frontmatter, naming, description limits, "use when" triggers, glob validity | CI (`validate`, `run`) | Free |
 | 2. Trigger & routing | Positive prompts rank their artifact top-k; negative prompts don't; no two descriptions near-collide | CI (`run`) | Free |
-| 3. Behavioral | An agent following the artifact satisfies its `expectations[]` | On demand (`behavioral`) | Tokens |
+| 3. Behavioral | An agent following the artifact satisfies its `expectations[]` | Scheduled CI (`behavioral`) | A cheap model run |
+
+Tiers 1 and 2 are free and deterministic, so they gate every PR. **Tier 3 is where the real value is** — it's the only tier that proves an agent following your skill actually does the right thing, and it belongs on a schedule (e.g. nightly/weekly) so drift in the underlying codebase or model surfaces on its own. Point it at a cheap, fast model: most of the signal is *did the agent take the right actions*, which small models judge fine.
 
 Tier 2 is a deterministic lexical approximation of routing (stemmed TF-IDF over descriptions, ranked **within each kind's pool** — skills compete with skills, Claude agents with Claude agents). It can't judge semantics — that's Tier 3's job — but it catches the two failure modes that dominate real trigger bugs: a description missing the vocabulary users actually say (false negative), and an over-broad description that outranks the right artifact (false positive). Glob-routed artifacts (`applyTo`, Cursor `globs`) are tested with file **paths** instead of prompts.
 
@@ -104,8 +106,10 @@ One file per artifact: `evals/cases/<name>.json`. The `evals[]` array is [Anthro
 
 ## Behavioral evals (Tier 3)
 
+This is the tier that matters most: a real agent follows the artifact and a grader checks it did the right thing. Run it on a schedule so codebase and model drift surface on their own, and point it at a cheap, fast model to keep it running often.
+
 ```bash
-skills-evals behavioral test-driven-development --dry-run   # print the plan, spend nothing
+skills-evals behavioral test-driven-development --dry-run   # print the plan, no model call
 skills-evals behavioral test-driven-development             # execute + grade
 skills-evals behavioral my-skill --adapter copilot --grader claude
 ```

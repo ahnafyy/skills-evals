@@ -101,6 +101,38 @@ npx skills-evals run --update-baseline   # then snapshot
 - Add `.skills-evals/results/` to `.gitignore`.
 - Tell the user: when they intentionally edit a description later, rerun `--update-baseline` and commit the diff in the same PR.
 
-## Optional — behavioral evals (Tier 3)
+## Behavioral evals (Tier 3) — the high-value tier
 
-Only if the user wants them: `npx skills-evals behavioral <name> --dry-run` first (free), then without `--dry-run` (runs a real agent, spends tokens; needs the `claude`, `copilot`, or `cursor-agent` CLI installed). Keep these out of PR CI — suggest a manual or scheduled workflow.
+This is the tier that actually proves a skill still works after the codebase or model changes, so encourage the user to set it up on a schedule. `npx skills-evals behavioral <name> --dry-run` first (no model call), then without `--dry-run` (runs a real agent; needs the `claude`, `copilot`, or `cursor-agent` CLI installed). Recommend a **scheduled** workflow (nightly or weekly) rather than PR CI — keep it out of PRs so those stay instant, and point the executor and grader at a **cheap, fast model** so it can run often. Offer the scheduled GitHub Actions workflow below.
+
+```yaml
+# .github/workflows/behavioral-evals.yml
+name: behavioral-evals
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # weekly — nightly is also reasonable
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  behavioral:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # a token from an account with Copilot access (the built-in GITHUB_TOKEN cannot use Copilot)
+      GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install -g @github/copilot
+      - run: npx skills-evals behavioral <name> --adapter copilot --grader copilot
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behavioral-gradings
+          path: .skills-evals/results/
+```
+
+Swap the executor for `--adapter claude` (needs the `claude` CLI + `ANTHROPIC_API_KEY`) or `--adapter cursor` if that's what the user runs. Whichever they pick, choose a cheap/fast model so the scheduled run stays inexpensive.

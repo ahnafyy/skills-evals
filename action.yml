@@ -16,7 +16,8 @@ inputs:
     description: >-
       Comma- or space-separated artifact names to run behavioral (Tier 3)
       evals for. Requires the executor adapter CLI to be installed and
-      authenticated in the job. Spends tokens. Empty (default) skips
+      authenticated in the job. Best run on a schedule against a cheap model.
+      Empty (default) skips
       behavioral evals entirely.
     required: false
     default: ''

@@ -74,7 +74,7 @@ The Action can run behavioral evals directly via the `behavioral` input:
 
 1. **On every PR:** `skills-evals run`. With a committed baseline, this catches routing drift on the exact PR that introduces it — e.g. a new skill whose description hijacks another skill's prompts.
 2. **Baseline updates:** when a PR intentionally changes descriptions, run `skills-evals run --update-baseline` locally and commit the refreshed `.skills-evals/baseline.json` in the same PR, so reviewers see the eval diff alongside the change.
-3. **Behavioral evals:** keep them out of PR CI (they spend tokens and add latency). Run them on demand or on a schedule. This repo's own [`behavioral-evals.yml`](https://github.com/ahnafyy/skills-evals/blob/main/.github/workflows/behavioral.yml) runs a real **GitHub Copilot** agent weekly:
+3. **Behavioral evals (the high-value tier):** run them on a schedule so drift in your codebase or the underlying model surfaces on its own. They live outside PR CI only to keep PRs instant — not because they're something to avoid. Keep them cheap (a small, fast model) so you can run them often. This repo's own [`behavioral-evals.yml`](https://github.com/ahnafyy/skills-evals/blob/main/.github/workflows/behavioral.yml) runs a real **GitHub Copilot** agent weekly:
 
 ```yaml
 name: behavioral-evals

@@ -5,7 +5,7 @@
 ```
  discover ──► normalize ──► Tier 1 ──► Tier 2 ──► baseline diff ──► exit code
                                              │
-                                             └──► Tier 3 (opt-in, on demand)
+                                             └──► Tier 3 (scheduled, real agent)
 ```
 
 1. **Discover** — walk the repo for every supported artifact file (skipping `node_modules`, build output, etc.).
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- |
 | 1. Structural | Frontmatter, naming, description limits, trigger phrases, glob validity | CI | Free |
 | 2. Trigger & routing | Positive prompts rank their artifact top-k; negatives don't; no description collisions | CI | Free |
-| 3. Behavioral | An agent following the artifact satisfies its `expectations[]` | On demand | Tokens |
+| 3. Behavioral | An agent following the artifact satisfies its `expectations[]` | Scheduled CI | A cheap model run |
 
 ### Tier 1 — structural
 
