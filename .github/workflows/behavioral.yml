@@ -17,6 +17,8 @@ on:
 
 permissions:
   contents: read
+  # Lets Copilot CLI authenticate with the built-in GITHUB_TOKEN — no PAT/secret needed.
+  copilot-requests: write
 
 concurrency:
   group: behavioral-evals
@@ -28,10 +30,10 @@ jobs:
     timeout-minutes: 30
     env:
       ARTIFACT: ${{ github.event.inputs.artifact || 'setup-skills-evals' }}
-      # A GitHub token from an account with Copilot access. Store it as the
-      # COPILOT_CLI_TOKEN repo secret — the built-in GITHUB_TOKEN cannot use Copilot.
-      GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+      # The built-in GITHUB_TOKEN authenticates Copilot CLI in Actions when the
+      # workflow grants copilot-requests: write (usage is billed to this account).
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

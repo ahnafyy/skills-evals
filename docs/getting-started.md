@@ -75,7 +75,7 @@ git add .skills-evals/baseline.json && git commit -m "chore: eval baseline"
 
 From now on, every `run` diffs against the snapshot and fails CI when a previously-passing trigger regresses. See [Regression detection](regression-detection.md).
 
-## 6. (Optional) Behavioral evals — Tier 3
+## 6. Behavioral evals — Tier 3
 
 ```bash
 npx skills-evals behavioral test-driven-development --dry-run   # plan only

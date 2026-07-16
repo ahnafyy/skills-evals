@@ -114,13 +114,15 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  copilot-requests: write   # lets Copilot CLI auth with the built-in GITHUB_TOKEN
 jobs:
   behavioral:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      # a token from an account with Copilot access (the built-in GITHUB_TOKEN cannot use Copilot)
-      GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
+      # the built-in GITHUB_TOKEN authenticates Copilot CLI in Actions when the
+      # workflow grants copilot-requests: write — no PAT or extra secret needed
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
