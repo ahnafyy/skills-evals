@@ -74,7 +74,7 @@ The Action can run behavioral evals directly via the `behavioral` input:
 
 1. **On every PR:** `skills-evals run`. With a committed baseline, this catches routing drift on the exact PR that introduces it — e.g. a new skill whose description hijacks another skill's prompts.
 2. **Baseline updates:** when a PR intentionally changes descriptions, run `skills-evals run --update-baseline` locally and commit the refreshed `.skills-evals/baseline.json` in the same PR, so reviewers see the eval diff alongside the change.
-3. **Behavioral evals:** keep them out of PR CI (they spend tokens and add latency). Run them on demand or on a schedule:
+3. **Behavioral evals:** keep them out of PR CI (they spend tokens and add latency). Run them on demand or on a schedule. This repo's own [`behavioral-evals.yml`](https://github.com/ahnafyy/skills-evals/blob/main/.github/workflows/behavioral.yml) runs a real **GitHub Copilot** agent weekly:
 
 ```yaml
 name: behavioral-evals
@@ -82,21 +82,33 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * 1'   # weekly
+permissions:
+  contents: read
 jobs:
   behavioral:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # a token from an account with Copilot access — the built-in
+      # GITHUB_TOKEN cannot use Copilot
+      GH_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      # requires a configured claude CLI + API key in the environment
-      - run: npx skills-evals behavioral my-most-important-skill
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - run: npm install -g @github/copilot
+      - run: npx skills-evals behavioral my-most-important-skill --adapter copilot --grader copilot
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behavioral-gradings
+          path: .skills-evals/results/
 ```
 
-To use a different executor, pass `--adapter copilot` / `--adapter cursor` (with the matching CLI installed and its credentials in `env`), or set `behavioral.adapter` in the committed config file.
+When Copilot is both executor and grader the trace is final-response text (`traceKind: text`), so the grader judges conservatively. If you also have the `claude` CLI available, `--grader claude` grades the trace with higher fidelity.
+
+To use a different executor, pass `--adapter claude` / `--adapter cursor` (with the matching CLI installed and its credentials in `env`), or set `behavioral.adapter` in the committed config file.
 
 ## What to gitignore vs commit
 
