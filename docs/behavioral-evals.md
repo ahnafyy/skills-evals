@@ -1,4 +1,4 @@
-# Behavioral evals (Tier 3)
+# Behavioral evals — Tier 3
 
 Tier 3 answers the question the other tiers can't: **does an agent following this artifact actually behave the way it promises?** It runs each eval prompt through a real headless agent and grades the execution trace against your `expectations[]`.
 

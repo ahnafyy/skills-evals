@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ahnafyy/skills-evals@v0.1.0
+      - uses: ahnafyy/skills-evals@v0.2.0
         with:
           root: .          # optional, default '.'
           args: ''         # extra args for `skills-evals run`

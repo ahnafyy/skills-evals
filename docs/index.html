@@ -28,32 +28,17 @@
       font-family: var(--mono);
     }
     body { background: var(--bg); color: var(--fg); }
-    /* ---- cover ---- */
-    section.cover { background: var(--bg) !important; }
-    section.cover .cover-main { text-align: left; max-width: 960px; }
-    .ascii-logo {
-      color: var(--accent); background: none; border: none; padding: 0;
-      font-size: clamp(5px, 1.1vw, 11px); line-height: 1.15; overflow-x: auto;
+    /* ---- home hero (rendered inline at the top of the homepage, so
+       visitors land directly on content instead of a full-screen splash) ---- */
+    .markdown-section .ascii-logo {
+      color: var(--accent); background: none !important; border: none; padding: 0;
+      margin: 0 0 1.25rem; font-size: clamp(5px, 1.1vw, 11px); line-height: 1.15; overflow-x: auto;
     }
-    section.cover blockquote {
-      border-left: 3px solid var(--accent); padding-left: 1em; margin: 1.5em 0;
+    .markdown-section .try-it {
+      background: var(--bg-alt) !important; border: 1px solid var(--border); border-radius: 0;
+      color: var(--accent); padding: 14px 18px; display: inline-block; font-size: 15px; margin: .5rem 0 1.25rem;
     }
-    section.cover blockquote > p {
-      color: var(--fg) !important; font-size: 1.1rem; letter-spacing: 0.15em; font-weight: 700;
-    }
-    section.cover .cover-main > p:last-child a {
-      border: 1px solid var(--accent); border-radius: 0; background: none;
-      color: var(--accent); font-family: var(--mono); letter-spacing: 0.1em;
-      box-shadow: none; transition: background .15s, color .15s;
-    }
-    section.cover .cover-main > p:last-child a:hover {
-      background: var(--accent); color: #0a0a0a; opacity: 1;
-    }
-    .try-it {
-      background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0;
-      color: var(--accent); padding: 14px 18px; display: inline-block; font-size: 15px;
-    }
-    section.cover .mask { display: none; }
+    .markdown-section .try-it code { background: none; color: inherit; padding: 0; }
     /* ---- sidebar ---- */
     .sidebar { background: #0d0d0d; border-right: 1px solid var(--border); color: var(--fg-dim); }
     .sidebar > h1 a, .app-name-link { color: var(--accent) !important; font-weight: 700; }
@@ -116,8 +101,7 @@
       name: 'skills-evals',
       repo: 'ahnafyy/skills-evals',
       loadSidebar: true,
-      coverpage: true,
-      onlyCover: false,
+      coverpage: false,
       subMaxLevel: 2,
       auto2top: true,
       relativePath: true,

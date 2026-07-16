@@ -23,7 +23,7 @@ Ask these questions one at a time:
    - *"What are 3–5 things users actually say that should trigger it?"* (realistic phrasing, not the description restated)
    - *"What nearby asks should it NOT handle, and which artifact owns those instead?"*
 2. **"Is this repo on CI?"**
-   - GitHub Actions → offer the `ahnafyy/skills-evals@v0.1.0` action or a plain `npx skills-evals run` step.
+   - GitHub Actions → offer the `ahnafyy/skills-evals@v0.2.0` action or a plain `npx skills-evals run` step.
    - Other CI (CircleCI, GitLab, Jenkins…) → add `npx skills-evals run` to their existing pipeline config.
    - No CI → skip; local runner only.
 3. **"How do you want to run it locally?"** — offer to hook into whatever they use:
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ahnafyy/skills-evals@v0.1.0
+      - uses: ahnafyy/skills-evals@v0.2.0
 ```
 
 ## Step 5 — Baseline and verify

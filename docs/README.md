@@ -1,8 +1,21 @@
-# skills-evals
+<pre class="ascii-logo">
+███████╗██╗  ██╗██╗██╗     ██╗     ███████╗      ███████╗██╗   ██╗ █████╗ ██╗     ███████╗
+██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝      ██╔════╝██║   ██║██╔══██╗██║     ██╔════╝
+███████╗█████╔╝ ██║██║     ██║     ███████╗█████╗█████╗  ██║   ██║███████║██║     ███████╗
+╚════██║██╔═██╗ ██║██║     ██║     ╚════██║╚════╝██╔══╝  ╚██╗ ██╔╝██╔══██║██║     ╚════██║
+███████║██║  ██╗██║███████╗███████╗███████║      ███████╗ ╚████╔╝ ██║  ██║███████╗███████║
+╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝      ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝╚══════╝
+</pre>
 
 > **Know when your agent skills stop working.**
 
 `skills-evals` validates, trigger-tests, and regression-tests every agent artifact in your repo — Claude/Copilot skills (`SKILL.md`), Copilot instructions and custom agents, Claude custom agents, Cursor rules, and prompt files — so you find out **in CI** when a skill stops triggering or behaving as intended after your codebase (or the skill) changed.
+
+<pre class="try-it">$ npx skills-evals run</pre>
+
+[Get started →](getting-started.md)
+
+---
 
 - **Zero dependencies** — plain Node.js ≥ 18.17, nothing to install beyond the package itself
 - **Deterministic & CI-safe** — Tiers 1 and 2 are free and reproducible; Tier 3 (real agent runs) is strictly opt-in
