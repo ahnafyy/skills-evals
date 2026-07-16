@@ -4,13 +4,9 @@ An installable skill that teaches **any** agent (Claude Code, GitHub Copilot, Cu
 
 ## Install
 
-**With the [skills.sh](https://skills.sh) CLI** (picks the right location for your agent):
+This is a native [Agent Skill](https://agentskills.io) — an open standard supported directly by Claude Code and GitHub Copilot. **No CLI or middleman needed:** drop the `SKILL.md` into your agent's skills folder and it's discovered automatically by its `description`.
 
-```bash
-npx skills add ahnafyy/skills-evals
-```
-
-**Manually — Claude Code:**
+**Claude Code** — loads project skills from `.claude/skills/`:
 
 ```bash
 mkdir -p .claude/skills/setup-skills-evals
@@ -18,7 +14,7 @@ curl -fsSL https://raw.githubusercontent.com/ahnafyy/skills-evals/main/skills/se
   -o .claude/skills/setup-skills-evals/SKILL.md
 ```
 
-**Manually — GitHub Copilot:**
+**GitHub Copilot** (VS Code, CLI, cloud agent) — natively scans `.github/skills/`:
 
 ```bash
 mkdir -p .github/skills/setup-skills-evals
@@ -26,12 +22,16 @@ curl -fsSL https://raw.githubusercontent.com/ahnafyy/skills-evals/main/skills/se
   -o .github/skills/setup-skills-evals/SKILL.md
 ```
 
-**Manually — Cursor:**
+**Cursor** — Cursor doesn't read a skills folder; its native mechanism is rules in `.cursor/rules/*.mdc`. Save the instructions there as an agent-requested rule:
 
 ```bash
-mkdir -p .cursor/skills/setup-skills-evals
+mkdir -p .cursor/rules
 curl -fsSL https://raw.githubusercontent.com/ahnafyy/skills-evals/main/skills/setup-skills-evals/SKILL.md \
-  -o .cursor/skills/setup-skills-evals/SKILL.md
+  -o .cursor/rules/setup-skills-evals.mdc
 ```
+
+> The `SKILL.md` frontmatter (`name`, `description`) is a valid Cursor rule header; Cursor loads it when the `description` matches your request. Add `alwaysApply: false` to be explicit.
+
+**Any other Agent Skills-compatible agent** also reads the tool-agnostic `.agents/skills/` folder — use that if you prefer one location for every agent.
 
 Then ask your agent: *"set up skills-evals in this repo"*.

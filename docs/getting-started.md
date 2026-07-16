@@ -16,7 +16,7 @@ npm install --save-dev skills-evals
 
 Requires Node.js ≥ 18.17. Zero runtime dependencies.
 
-> **Prefer an agent to do all of this for you?** Install the [setup-skills-evals skill](https://github.com/ahnafyy/skills-evals/tree/main/skills/setup-skills-evals) — `npx skills add ahnafyy/skills-evals` — and ask your agent (Claude Code, GitHub Copilot, Cursor, …) to *"set up skills-evals in this repo"*. It runs the discovery, interviews you about what to test and how you run things (CI, npm, Gradle, `.sh`), and wires everything below up for you.
+> **Prefer an agent to do all of this for you?** Install the [setup-skills-evals skill](https://github.com/ahnafyy/skills-evals/tree/main/skills/setup-skills-evals) — a native [Agent Skill](https://agentskills.io), no CLI needed: drop its `SKILL.md` into `.claude/skills/`, `.github/skills/`, or a `.cursor/rules/*.mdc` — and ask your agent (Claude Code, GitHub Copilot, Cursor, …) to *"set up skills-evals in this repo"*. It runs the discovery, interviews you about what to test and how you run things (CI, npm, Gradle, `.sh`), and wires everything below up for you.
 
 ## 1. See what it discovers
 
