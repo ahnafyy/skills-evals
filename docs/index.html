@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>skills-evals — evals for your agent skills</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="Validate, trigger-test, and regression-test your agent skills, instructions, and custom agents (Copilot, Claude, Cursor).">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-alt: #101010;
+      --border: #262626;
+      --fg: #d4d4d4;
+      --fg-dim: #8b8b8b;
+      --accent: #4ade80;
+      --accent-dim: #22c55e;
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+      --theme-color: #4ade80;
+    }
+    body, .sidebar, .markdown-section, .app-name-link, .search input,
+    .markdown-section h1, .markdown-section h2, .markdown-section h3,
+    .markdown-section h4, .markdown-section table {
+      font-family: var(--mono);
+    }
+    body { background: var(--bg); color: var(--fg); }
+    /* ---- cover ---- */
+    section.cover { background: var(--bg) !important; }
+    section.cover .cover-main { text-align: left; max-width: 960px; }
+    .ascii-logo {
+      color: var(--accent); background: none; border: none; padding: 0;
+      font-size: clamp(5px, 1.1vw, 11px); line-height: 1.15; overflow-x: auto;
+    }
+    section.cover blockquote {
+      border-left: 3px solid var(--accent); padding-left: 1em; margin: 1.5em 0;
+    }
+    section.cover blockquote > p {
+      color: var(--fg) !important; font-size: 1.1rem; letter-spacing: 0.15em; font-weight: 700;
+    }
+    section.cover .cover-main > p:last-child a {
+      border: 1px solid var(--accent); border-radius: 0; background: none;
+      color: var(--accent); font-family: var(--mono); letter-spacing: 0.1em;
+      box-shadow: none; transition: background .15s, color .15s;
+    }
+    section.cover .cover-main > p:last-child a:hover {
+      background: var(--accent); color: #0a0a0a; opacity: 1;
+    }
+    .try-it {
+      background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0;
+      color: var(--accent); padding: 14px 18px; display: inline-block; font-size: 15px;
+    }
+    section.cover .mask { display: none; }
+    /* ---- sidebar ---- */
+    .sidebar { background: #0d0d0d; border-right: 1px solid var(--border); color: var(--fg-dim); }
+    .sidebar > h1 a, .app-name-link { color: var(--accent) !important; font-weight: 700; }
+    .app-name-link::before { content: '$ '; color: var(--fg-dim); }
+    .sidebar ul li a { color: var(--fg-dim); font-size: 13px; }
+    .sidebar ul li a:hover { color: var(--fg); text-decoration: none; }
+    .sidebar ul li.active > a { color: var(--accent); border-right: 2px solid var(--accent); font-weight: 700; }
+    .sidebar-toggle { background: transparent; }
+    .sidebar-toggle span { background-color: var(--accent); }
+    .search { border-bottom: 1px solid var(--border); }
+    .search input { background: var(--bg-alt); color: var(--fg); border: 1px solid var(--border); border-radius: 0; }
+    .search .matching-post { border-bottom: 1px solid var(--border); }
+    .search h2 { color: var(--accent); }
+    /* ---- content ---- */
+    .content, main { background: var(--bg); }
+    .markdown-section { color: var(--fg); max-width: 860px; }
+    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 { color: #f5f5f5; }
+    .markdown-section h1::before { content: '# '; color: var(--accent); }
+    .markdown-section h2::before { content: '## '; color: var(--accent); }
+    .markdown-section h3::before { content: '### '; color: var(--accent-dim); }
+    .markdown-section a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .markdown-section strong { color: #f5f5f5; }
+    .markdown-section blockquote { border-left: 3px solid var(--accent); background: var(--bg-alt); color: var(--fg-dim); }
+    .markdown-section blockquote p { color: var(--fg); }
+    .markdown-section code {
+      background: #161616; color: #7ee787; border-radius: 0; font-family: var(--mono);
+    }
+    .markdown-section pre {
+      background: var(--bg-alt) !important; border: 1px solid var(--border); border-radius: 0;
+    }
+    .markdown-section pre > code { background: var(--bg-alt) !important; color: var(--fg); }
+    .markdown-section tr { border-color: var(--border); background: var(--bg) !important; }
+    .markdown-section tr:nth-child(2n) { background: var(--bg-alt) !important; }
+    .markdown-section th, .markdown-section td { border: 1px solid var(--border); }
+    .markdown-section th { color: var(--accent); text-transform: uppercase; font-size: 12px; letter-spacing: 0.08em; }
+    .markdown-section hr { border-color: var(--border); }
+    /* prism */
+    .token.comment { color: #6a737d; }
+    .token.string, .token.attr-value { color: #7ee787; }
+    .token.keyword, .token.builtin { color: #79c0ff; }
+    .token.function { color: #d2a8ff; }
+    .token.number, .token.boolean { color: #ffa657; }
+    .token.property, .token.attr-name { color: #79c0ff; }
+    .token.punctuation, .token.operator { color: #8b949e; }
+    /* copy button */
+    .docsify-copy-code-button { background: var(--border) !important; color: var(--fg) !important; border-radius: 0 !important; font-family: var(--mono) !important; }
+    /* misc */
+    ::selection { background: var(--accent); color: #0a0a0a; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    .github-corner svg { fill: var(--accent); color: var(--bg); }
+    .progress { background-color: var(--accent) !important; }
+  </style>
+</head>
+<body>
+  <div id="app">Loading…</div>
+  <script>
+    window.$docsify = {
+      name: 'skills-evals',
+      repo: 'ahnafyy/skills-evals',
+      loadSidebar: true,
+      coverpage: true,
+      onlyCover: false,
+      subMaxLevel: 2,
+      auto2top: true,
+      relativePath: true,
+      search: {
+        placeholder: 'Search docs…',
+        depth: 3,
+      },
+      copyCode: {
+        buttonText: 'Copy',
+      },
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+</body>
+</html>

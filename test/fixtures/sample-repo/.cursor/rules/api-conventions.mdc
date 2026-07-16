@@ -1,0 +1,7 @@
+---
+description: API endpoint conventions
+globs: src/api/**
+alwaysApply: false
+---
+
+All endpoints return `{ data, error }` envelopes. Validate input with zod at the boundary.

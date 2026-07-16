@@ -1,0 +1,28 @@
+{
+  "artifact": "test-driven-development",
+  "kind": "skill",
+  "trigger": {
+    "positive": [
+      { "prompt": "Write a failing test for this bug before fixing it", "top_k": 1 },
+      { "prompt": "Fix the rounding bug in invoice totals, test-first", "top_k": 3 },
+      { "prompt": "Add test coverage before refactoring this module", "top_k": 3 }
+    ],
+    "negative": [
+      { "prompt": "Draft a commit message for these changes", "owner": "commit-messages" },
+      { "prompt": "Write a conventional commit summarizing this git history", "owner": "commit-messages" }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Fix the reported rounding bug in the invoice totals, test-first.",
+      "expected_output": "A failing test demonstrating the bug, a minimal fix turning it green, full suite passing",
+      "expectations": [
+        "A failing test is written and shown failing before the fix",
+        "The implementation is the minimum needed to pass",
+        "The full suite is run after the fix to catch regressions"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

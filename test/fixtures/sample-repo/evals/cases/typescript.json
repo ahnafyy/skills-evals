@@ -1,0 +1,15 @@
+{
+  "artifact": "typescript",
+  "kind": "instructions",
+  "trigger": {
+    "positive": [
+      { "path": "src/app/index.ts" },
+      { "path": "src/components/Button.tsx" }
+    ],
+    "negative": [
+      { "path": "README.md" },
+      { "path": "scripts/build.sh" }
+    ]
+  },
+  "evals": []
+}

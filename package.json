@@ -1,0 +1,42 @@
+{
+  "name": "skills-evals",
+  "version": "0.1.0",
+  "description": "Validate, trigger-test, and regression-test your agent artifacts — Claude/Copilot skills (SKILL.md), Copilot instructions & custom agents, Claude custom agents, Cursor rules, and prompt files.",
+  "license": "MIT",
+  "author": "Ahnaf Prio",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahnafyy/skills-evals.git"
+  },
+  "homepage": "https://ahnafyy.github.io/skills-evals/",
+  "keywords": [
+    "agent-skills",
+    "skills",
+    "evals",
+    "copilot",
+    "claude",
+    "cursor",
+    "agents",
+    "instructions",
+    "llm",
+    "ci"
+  ],
+  "main": "src/index.js",
+  "bin": {
+    "skills-evals": "bin/skills-evals.js"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "test": "node --test test/",
+    "dogfood": "node bin/skills-evals.js run --root test/fixtures/sample-repo"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ]
+}

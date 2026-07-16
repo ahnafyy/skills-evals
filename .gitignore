@@ -1,0 +1,4 @@
+node_modules/
+.skills-evals/results/
+*.log
+.DS_Store

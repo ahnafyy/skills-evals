@@ -1,0 +1,27 @@
+{
+  "artifact": "commit-messages",
+  "kind": "skill",
+  "trigger": {
+    "positive": [
+      { "prompt": "Draft a commit message for these changes", "top_k": 1 },
+      { "prompt": "Write a conventional commit for this refactor", "top_k": 3 },
+      { "prompt": "Review my git history hygiene and suggest better commit messages", "top_k": 3 }
+    ],
+    "negative": [
+      { "prompt": "Write a failing test for this bug before fixing it", "owner": "test-driven-development" },
+      { "prompt": "Add test coverage before refactoring this module", "owner": "test-driven-development" }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Commit the staged changes: a fix for null handling in the parser.",
+      "expected_output": "A conventional commit message like fix(parser): handle null input",
+      "expectations": [
+        "The commit message follows the conventional commits format",
+        "The summary line is imperative and under 72 characters"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

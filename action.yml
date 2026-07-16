@@ -1,0 +1,56 @@
+name: 'skills-evals'
+description: 'Validate, trigger-test, and regression-test agent skills, instructions, and custom agents (Copilot, Claude, Cursor)'
+branding:
+  icon: 'check-circle'
+  color: 'purple'
+inputs:
+  root:
+    description: 'Directory to scan for agent artifacts'
+    required: false
+    default: '.'
+  args:
+    description: 'Extra CLI arguments passed to `skills-evals run`'
+    required: false
+    default: ''
+  behavioral:
+    description: >-
+      Comma- or space-separated artifact names to run behavioral (Tier 3)
+      evals for. Requires the executor adapter CLI to be installed and
+      authenticated in the job. Spends tokens. Empty (default) skips
+      behavioral evals entirely.
+    required: false
+    default: ''
+  adapter:
+    description: >-
+      Behavioral executor adapter: claude, copilot, or cursor. Empty falls
+      back to behavioral.adapter in skills-evals.config.json, then claude.
+    required: false
+    default: ''
+  grader:
+    description: 'Behavioral grader adapter. Empty falls back to config, then the executor adapter.'
+    required: false
+    default: ''
+runs:
+  using: 'composite'
+  steps:
+    - name: Run skills-evals (tiers 1+2 + baseline diff)
+      shell: bash
+      run: node "${{ github.action_path }}/bin/skills-evals.js" run --root "${{ inputs.root }}" ${{ inputs.args }}
+    - name: Run behavioral evals (tier 3)
+      if: inputs.behavioral != ''
+      shell: bash
+      env:
+        INPUT_BEHAVIORAL: ${{ inputs.behavioral }}
+        INPUT_ADAPTER: ${{ inputs.adapter }}
+        INPUT_GRADER: ${{ inputs.grader }}
+      run: |
+        ARGS=(--root "${{ inputs.root }}")
+        [ -n "$INPUT_ADAPTER" ] && ARGS+=(--adapter "$INPUT_ADAPTER")
+        [ -n "$INPUT_GRADER" ] && ARGS+=(--grader "$INPUT_GRADER")
+        FAILED=0
+        for name in $(echo "$INPUT_BEHAVIORAL" | tr ',' ' '); do
+          echo "::group::behavioral: $name"
+          node "${{ github.action_path }}/bin/skills-evals.js" behavioral "$name" "${ARGS[@]}" || FAILED=1
+          echo "::endgroup::"
+        done
+        exit $FAILED
