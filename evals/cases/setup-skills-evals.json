@@ -1,0 +1,30 @@
+{
+  "artifact": "setup-skills-evals",
+  "kind": "skill",
+  "trigger": {
+    "positive": [
+      { "prompt": "Set up skills-evals in this repo", "top_k": 1 },
+      { "prompt": "Add evals for my skills and custom agents", "top_k": 1 },
+      { "prompt": "Test whether my skill is triggering correctly", "top_k": 1 },
+      { "prompt": "Add regression tests for my Cursor rules and instructions", "top_k": 1 },
+      { "prompt": "Why isn't my skill being picked up by the agent?", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Draft a commit message for these changes" },
+      { "prompt": "Deploy the app to production" }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Set up skills-evals in a repo that has one SKILL.md and no eval cases yet.",
+      "expected_output": "Runs discovery, scaffolds evals/cases/<name>.json with realistic triggers, wires a runner, and creates a committed baseline.",
+      "expectations": [
+        "Inventories artifacts with `skills-evals list` (or init) before writing any case",
+        "Writes an eval case with at least 3 positive and 2 negative triggers that do not copy the description",
+        "Wires a runner (npm script and/or CI) and creates .skills-evals/baseline.json"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

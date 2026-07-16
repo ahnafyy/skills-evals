@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-16T04:22:06.008Z",
+  "rank1Rate": 1,
+  "artifacts": {
+    "skill:setup-skills-evals": {
+      "hash": "965a46f0a606be341fd45644",
+      "kind": "skill"
+    }
+  },
+  "triggers": {
+    "skill:setup-skills-evals": {
+      "696141415bc9348c": {
+        "type": "positive",
+        "text": "Set up skills-evals in this repo",
+        "rank": 1,
+        "passed": true
+      },
+      "b0179fe469af15d7": {
+        "type": "positive",
+        "text": "Add evals for my skills and custom agents",
+        "rank": 1,
+        "passed": true
+      },
+      "8185b706537cd8e0": {
+        "type": "positive",
+        "text": "Test whether my skill is triggering correctly",
+        "rank": 1,
+        "passed": true
+      },
+      "9f02378a4ce9a458": {
+        "type": "positive",
+        "text": "Add regression tests for my Cursor rules and instructions",
+        "rank": 1,
+        "passed": true
+      },
+      "7279342d1fa4d669": {
+        "type": "positive",
+        "text": "Why isn't my skill being picked up by the agent?",
+        "rank": 1,
+        "passed": true
+      },
+      "2462927097deb422": {
+        "type": "negative",
+        "text": "Draft a commit message for these changes",
+        "rank": null,
+        "passed": true
+      },
+      "962748d0293733a2": {
+        "type": "negative",
+        "text": "Deploy the app to production",
+        "rank": null,
+        "passed": true
+      }
+    }
+  },
+  "collisions": []
+}

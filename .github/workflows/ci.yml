@@ -18,6 +18,8 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Unit tests
         run: npm test
+      - name: Evals (our own skills, with regression baseline)
+        run: npm run evals
       - name: Dogfood (fixture repo)
         run: node bin/skills-evals.js run --root test/fixtures/sample-repo
       - name: Dogfood (validate)

@@ -30,6 +30,8 @@
   },
   "scripts": {
     "test": "node --test test/*.test.js",
+    "evals": "node bin/skills-evals.js run",
+    "evals:baseline": "node bin/skills-evals.js run --update-baseline",
     "dogfood": "node bin/skills-evals.js run --root test/fixtures/sample-repo"
   },
   "files": [
