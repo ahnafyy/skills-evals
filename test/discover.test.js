@@ -2,6 +2,8 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { discover, classify } = require('../src/discover');
 
@@ -60,4 +62,24 @@ test('routing modes are classified correctly', () => {
 test('exclude globs filter artifacts out', () => {
   const artifacts = discover(ROOT, { exclude: ['skills/**'] });
   assert.ok(!artifacts.some((a) => a.kind === 'skill'));
+});
+
+test('walks the native skills folders, including .agents/skills/', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'skills-evals-walk-'));
+  try {
+    const locations = {
+      '.claude/skills/a/SKILL.md': '---\nname: a\ndescription: alpha skill\n---\nbody',
+      '.github/skills/b/SKILL.md': '---\nname: b\ndescription: bravo skill\n---\nbody',
+      '.agents/skills/c/SKILL.md': '---\nname: c\ndescription: charlie skill\n---\nbody',
+    };
+    for (const [rel, content] of Object.entries(locations)) {
+      const full = path.join(dir, rel);
+      fs.mkdirSync(path.dirname(full), { recursive: true });
+      fs.writeFileSync(full, content);
+    }
+    const keys = discover(dir).map((art) => art.key).sort();
+    assert.deepEqual(keys, ['skill:a', 'skill:b', 'skill:c']);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });

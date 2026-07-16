@@ -40,7 +40,7 @@ function* walk(dir) {
     return;
   }
   for (const e of entries) {
-    if (e.name.startsWith('.') && !['.github', '.claude', '.cursor'].includes(e.name)) continue;
+    if (e.name.startsWith('.') && !['.github', '.claude', '.cursor', '.agents'].includes(e.name)) continue;
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name)) continue;

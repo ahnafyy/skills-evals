@@ -22,17 +22,16 @@ npx skills-evals behavioral my-skill     # tier 3 — a real agent proves the sk
 
 This repo ships an installable **[setup-skills-evals](skills/setup-skills-evals/)** skill that walks any agent (Claude Code, GitHub Copilot, Cursor, …) through the whole setup — it inventories your artifacts, asks what you want to test, fills in the eval cases from your answers, and wires up CI plus your local runner (npm, Gradle, Make, or a `.sh`).
 
-It's a native [Agent Skill](https://agentskills.io) (open standard) — no CLI or middleman. Drop the `SKILL.md` into your agent's skills folder:
+It's a native [Agent Skill](https://agentskills.io) (open standard) — no CLI or middleman. Because it *sets up other repos*, install it **once, globally**, so it's available everywhere:
 
 ```bash
-# Claude Code
+# Claude Code — personal skill, works in every repo
 curl -fsSL https://raw.githubusercontent.com/ahnafyy/skills-evals/main/skills/setup-skills-evals/SKILL.md \
-  --create-dirs -o .claude/skills/setup-skills-evals/SKILL.md
-# GitHub Copilot: same file at .github/skills/setup-skills-evals/SKILL.md
-# Cursor: save it as a rule at .cursor/rules/setup-skills-evals.mdc
+  --create-dirs -o ~/.claude/skills/setup-skills-evals/SKILL.md
+# GitHub Copilot: same file at ~/.copilot/skills/setup-skills-evals/SKILL.md
 ```
 
-Then ask your agent: *"set up skills-evals in this repo"*. See [skills/setup-skills-evals/](skills/setup-skills-evals/) for the exact path per agent.
+Open any repo and ask your agent: *"set up skills-evals in this repo"*. To commit it into a single project instead (and the exact path per agent), see [skills/setup-skills-evals/](skills/setup-skills-evals/).
 
 ## What it discovers
 
