@@ -135,7 +135,7 @@ registerAdapter({
 ## GitHub Action
 
 ```yaml
-- uses: ahnafyy/skills-evals@v1
+- uses: ahnafyy/skills-evals@v0.1.0
   with:
     root: .
     # optional — run tier 3 in CI (needs the adapter CLI + credentials):

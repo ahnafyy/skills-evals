@@ -87,7 +87,7 @@ Runs the eval prompt through a real headless agent and grades the execution trac
 ## 7. Add it to CI
 
 ```yaml
-- uses: ahnafyy/skills-evals@v1
+- uses: ahnafyy/skills-evals@v0.1.0
 ```
 
 See [GitHub Action & CI](ci.md).

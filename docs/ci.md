@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ahnafyy/skills-evals@v1
+      - uses: ahnafyy/skills-evals@v0.1.0
         with:
           root: .          # optional, default '.'
           args: ''         # extra args for `skills-evals run`
@@ -52,7 +52,7 @@ Whichever adapter you pick, its CLI must be installed and authenticated in the C
 The Action can run behavioral evals directly via the `behavioral` input:
 
 ```yaml
-- uses: ahnafyy/skills-evals@v1
+- uses: ahnafyy/skills-evals@v0.1.0
   with:
     behavioral: test-driven-development, commit-messages
     adapter: copilot   # optional — omit to use config / default
