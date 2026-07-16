@@ -1,6 +1,6 @@
 {
   "name": "skills-evals",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Validate, trigger-test, and regression-test your agent artifacts — Claude/Copilot skills (SKILL.md), Copilot instructions & custom agents, Claude custom agents, Cursor rules, and prompt files.",
   "license": "MIT",
   "author": "Ahnaf Prio",
